@@ -55,7 +55,7 @@ const Login = () =>{
                 <Label>
                     Password
                     <Input
-                    type="text"
+                    type="password"
                     name="password"
                     onChange={handleChange}
                     value={password}

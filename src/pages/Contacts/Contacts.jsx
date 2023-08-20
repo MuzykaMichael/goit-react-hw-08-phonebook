@@ -8,8 +8,7 @@ import {Container,
   Message,} from '../../components/App.styled';
 import { useSelector, useDispatch } from "react-redux";
 import { selectContacts, selectVisibleContacts, selectLoading,selectError } from "redux/selectors";
-import { useEffect } from "react";
-import { fetchContacts } from "redux/operations";
+import { logOut } from "redux/auth/operations";
 
 export const Contacts =()=> {
   const contacts = useSelector(selectContacts)
@@ -17,13 +16,13 @@ export const Contacts =()=> {
   const error = useSelector(selectError)
   const filteredContacts = useSelector(selectVisibleContacts)
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(fetchContacts());
-  },[dispatch]);
+
 
     return(
       <>
+      
       <Container>
+        <button onClick={()=>dispatch(logOut())}>Log Out</button>
         <FirstTitle>Phonebook</FirstTitle>
         <Form />
         <SecondTitle>Contacts</SecondTitle>

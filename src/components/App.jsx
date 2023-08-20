@@ -4,7 +4,6 @@ import {Navigate, Route, Routes} from 'react-router-dom'
 import { refreshUser } from "redux/auth/operations";
 import { PrivateRoute } from "./PrivateRoute";
 import { RestrictedRoute } from "./RestrictedRoute";
-import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
 import { Loader } from "./Loader/Loader";
 
@@ -23,17 +22,13 @@ export const App = ()=>{
   return(
     <Suspense fallback={<Loader/>}>
     <Routes>
-      {/* <Route path="/" element={<Welcome />}> */}
       <Route index element={<Welcome />}/>
-      <Route path="contacts" element={<PrivateRoute redirectTo="/login" component={<Contacts />}/>}/>
+      <Route path="contacts" element={<PrivateRoute component={<Contacts />}/>}/>
       <Route path="register" element={<RestrictedRoute redirectTo="/contacts" component={<Register />}/>}/>
       <Route path="login" element={<RestrictedRoute redirectTo="/contacts" component={<Login />}/>}/>
       <Route path="*" element={<Navigate to="/"/>}/>
-      {/* </Route> */}
     </Routes>
     </Suspense>
-    
-
   )
 
 

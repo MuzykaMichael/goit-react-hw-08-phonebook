@@ -18,7 +18,7 @@ const Register = () =>{
             register({
                 name:form.elements.name.value,
                 email:form.elements.email.value,
-                password:form.elements.paassword.value,
+                password:form.elements.password.value,
             })
         );
         form.reset();
@@ -70,7 +70,7 @@ const Register = () =>{
                 <Label>
                     Password
                     <Input
-                    type="text"
+                    type="password"
                     name="password"
                     onChange={handleChange}
                     value={password}

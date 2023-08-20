@@ -1,10 +1,8 @@
 import { useSelector } from "react-redux"; 
 import { NavLink } from "react-router-dom";
 import { selectIsLoggedIn } from "redux/auth/selectors";
-import {Title} from './Welcome.styled'
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
-import { Loader } from "components/Loader/Loader";
+import {Title,Text} from './Welcome.styled'
+
 
 const Welcome = () =>{
     const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -13,14 +11,14 @@ const Welcome = () =>{
         <>
         <Title>Welcome to phonebook</Title>
         {isLoggedIn?(
-            <p>
+            <Text>
                 Click {<NavLink to="/contacts">this</NavLink>} to view contacts
-            </p>
+            </Text>
         ):(
-            <p>
+            <Text>
                 {<NavLink to="/register">Sign Up</NavLink>} or {''}
-                {<NavLink to="/login">Log In</NavLink>}
-            </p>
+                {<NavLink to="/login">Log In</NavLink>} to continue
+            </Text>
         )}
         </>
 
