@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { register } from "redux/auth/operations";
 import { Container, Form, Input, Label, Button } from "./Register.styled";
 import { useState } from "react";
-
+import { NavLink } from "react-router-dom";
 const Register = () =>{
     const dispatch = useDispatch();
 
@@ -81,7 +81,7 @@ const Register = () =>{
                     Sign Up
                 </Button>
             </Form>
-            <p to="/login">or Log In</p>
+            <NavLink to="/login">Log In</NavLink>
         </Container>
         </>
     )
