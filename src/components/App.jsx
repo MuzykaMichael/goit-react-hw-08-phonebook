@@ -1,50 +1,40 @@
-import { Form } from "./Form/Form";
-import { ListContacts } from "./ListContacts/ListContacts";
-import { Filtration } from "./Filtration/Filtration";
-import {Container,
-  FirstTitle,
-  SecondTitle,
-  Breaker,
-  Message,} from './App.styled';
-import { useSelector, useDispatch } from "react-redux";
-import { selectContacts, selectVisibleContacts, selectLoading,selectError } from "redux/selectors";
-import { useEffect } from "react";
-import { fetchContacts } from "redux/operations";
+import { lazy, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {Navigate, Route, Routes} from 'react-router-dom'
+import { refreshUser } from "redux/auth/operations";
+import { PrivateRoute } from "./PrivateRoute";
+import { RestrictedRoute } from "./RestrictedRoute";
+import { Outlet } from "react-router-dom";
+import { Suspense } from "react";
+import { Loader } from "./Loader/Loader";
 
-export const App =()=> {
-  const contacts = useSelector(selectContacts)
-  const isLoading = useSelector(selectLoading);
-  const error = useSelector(selectError)
-  const filteredContacts = useSelector(selectVisibleContacts)
+export const App = ()=>{
+  const Welcome = lazy(()=>import('pages/Welcome/Welcome'));
+  const Contacts = lazy(()=>import('pages/Contacts/Contacts'));
+  const Register = lazy(()=>import('pages/Register/Register'));
+  const Login = lazy(()=>import('pages/LogIn/LogIn'));
+
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(fetchContacts());
-  },[dispatch]);
 
-    return(
-      <Container>
-        <FirstTitle>Phonebook</FirstTitle>
-        <Form />
-        <SecondTitle>Contacts</SecondTitle>
-        <Breaker>
-          {contacts.items.length > 0 ? (
-            <>
-              <Filtration/>
-              {isLoading&&<p>Loading, wait...</p>}
-              {error&&<p>{error}</p>}
-              {filteredContacts.length > 0?(
-                <ListContacts/>
-            
-          ):(
-            <Message>
-              Sorry, we didn't find any contacts matching your query
-            </Message>
-          )}
-          </>
-          ):(
-            <Message>You don't have any contacts yet</Message>
-          )}
-        </Breaker>
-      </Container>
-    );
-};
+  useEffect(()=>{
+    dispatch(refreshUser());
+  },[dispatch])
+
+  return(
+    <Suspense fallback={<Loader/>}>
+    <Routes>
+      {/* <Route path="/" element={<Welcome />}> */}
+      <Route index element={<Welcome />}/>
+      <Route path="contacts" element={<PrivateRoute redirectTo="/login" component={<Contacts />}/>}/>
+      <Route path="register" element={<RestrictedRoute redirectTo="/contacts" component={<Register />}/>}/>
+      <Route path="login" element={<RestrictedRoute redirectTo="/contacts" component={<Login />}/>}/>
+      <Route path="*" element={<Navigate to="/"/>}/>
+      {/* </Route> */}
+    </Routes>
+    </Suspense>
+    
+
+  )
+
+
+}
