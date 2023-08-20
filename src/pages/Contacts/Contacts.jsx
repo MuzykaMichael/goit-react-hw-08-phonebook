@@ -9,6 +9,8 @@ import {Container,
 import { useSelector, useDispatch } from "react-redux";
 import { selectContacts, selectVisibleContacts, selectLoading,selectError } from "redux/selectors";
 import { logOut } from "redux/auth/operations";
+import { useEffect } from "react";
+import { fetchContacts } from "redux/operations";
 
 export const Contacts =()=> {
   const contacts = useSelector(selectContacts)
@@ -16,7 +18,9 @@ export const Contacts =()=> {
   const error = useSelector(selectError)
   const filteredContacts = useSelector(selectVisibleContacts)
   const dispatch = useDispatch();
-
+useEffect(()=>{
+  dispatch(fetchContacts())
+},[dispatch])
 
     return(
       <>
