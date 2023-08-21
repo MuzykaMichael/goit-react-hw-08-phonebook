@@ -7,11 +7,13 @@ import { RestrictedRoute } from "./RestrictedRoute";
 import { Suspense } from "react";
 import { Loader } from "./Loader/Loader";
 
+const Welcome = lazy(()=>import('pages/Welcome/Welcome'));
+const Contacts = lazy(()=>import('pages/Contacts/Contacts'));
+const Register = lazy(()=>import('pages/Register/Register'));
+const Login = lazy(()=>import('pages/LogIn/LogIn'));
+
 export const App = ()=>{
-  const Welcome = lazy(()=>import('pages/Welcome/Welcome'));
-  const Contacts = lazy(()=>import('pages/Contacts/Contacts'));
-  const Register = lazy(()=>import('pages/Register/Register'));
-  const Login = lazy(()=>import('pages/LogIn/LogIn'));
+
 
   const dispatch = useDispatch();
 
